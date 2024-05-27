@@ -6,4 +6,15 @@
         INSERT INTO board_table(boardtitle, boardwriter, boardpass, boardcontents)
         values(#{boardDto.boardTitle}, #{boardDto.boardWriter}, #{boardDto.boardPass}, #{boardDto.boardContents})
     </insert>
+    <select id="findAll" resultType="boardDto">
+        SELECT id, boardtitle, boardwriter, boardhits,
+            TO_CHAR(createdat, 'yyyy-mm-dd') AS createdAt
+        FROM board_table ORDER BY id DESC
+    </select>
+    <select id="findById" parameterType="int" resultType="com.example.mybatisTest.dto.BoardDto">
+        SELECT * FROM board_table WHERE id = #{id}
+    </select>
+    <update id="boardHitsUpdate" parameterType="int">
+        UPDATE board_table SET boardhits = boardhits + 1 WHERE id = #{id}
+    </update>
 </mapper>
