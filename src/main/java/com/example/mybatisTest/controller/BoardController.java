@@ -39,15 +39,34 @@ public class BoardController {
         return "list";
     }
 
-    @GetMapping("/board/{id}")
-    public String viewBoard(@PathVariable("id") int id, Model model) {
-        // 조회수 증가
-        boardService.incrementBoardHits(id);
+    @GetMapping("/{id}")
+    public String findById(@PathVariable("id")Long id, Model model) {
+        //조회수 처리
+        boardService.updateHits(id);
 
-        // 게시글 상세 정보 조회
-        BoardDto board = boardService.getBoardById(id);
-        model.addAttribute("board", board);
+        //상세내용 가져옴
+        BoardDto boardDto = boardService.findById(id);
+        model.addAttribute("board", boardDto);
+        return "detail";
+    }
 
-        return "board/view";
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable("id")Long id, Model model) {
+        BoardDto boardDto = boardService.findById(id);
+        model.addAttribute("board", boardDto);
+        return "update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(BoardDto boardDto) {
+        boardService.updateBoard(boardDto);
+        boardService.findById(boardDto.getId());
+        return "redirect:/" + boardDto.getId();
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id")Long id) {
+        boardService.delete(id);
+        return "redirect:/list";
     }
 }

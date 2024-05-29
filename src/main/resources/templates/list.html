@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <table>
+    <table border="1">
         <tr>
             <th>번호</th>
             <th>제목</th>
@@ -15,7 +15,10 @@
         </tr>
         <tr th:each="board : ${boardList}">
             <td th:text="${board.id}"></td>
-            <td th:text="${board.boardTitle}"></td>
+            <td>
+                <a th:href="@{|/${board.id}|}"
+                   th:text="${board.boardTitle}"></a>
+            </td>
             <td th:text="${board.boardWriter}"></td>
             <td th:text="${board.createdAt}"></td>
             <td th:text="${board.boardHits}"></td>
