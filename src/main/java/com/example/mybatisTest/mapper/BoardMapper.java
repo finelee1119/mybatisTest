@@ -1,6 +1,7 @@
 package com.example.mybatisTest.mapper;
 
 import com.example.mybatisTest.dto.BoardDto;
+import com.example.mybatisTest.dto.BoardFileDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    Long save(@Param("boardDto") BoardDto boardDto);
+    void save(@Param("boardDto") BoardDto boardDto);
 
     List<BoardDto> findAll();
 
@@ -20,4 +21,7 @@ public interface BoardMapper {
 
     void deleteById(@Param("id") Long id);
 
+    void saveFile(@Param("boardFile") BoardFileDto boardFileDto);
+
+    List<BoardFileDto> findFile(@Param("id") Long id);
 }
